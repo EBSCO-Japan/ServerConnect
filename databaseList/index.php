@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-  date_default_timezone_set('Asia/Taipei');
+  date_default_timezone_set('Asia/Tokyo');
   $jsonFile_direct = 'data/eResourceList.json';
 
   // get resource list
@@ -87,7 +87,7 @@
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>圖書館 - 電子資料庫 powered by EBSCO Database Listing</title>
+  <title>図書館 - データベース一覧 powered by EBSCO Database Listing</title>
   <link rel="stylesheet" type="text/css" href="lib/css/index.css?v=1.1"/>
   <script>
     var ua = navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i),
@@ -151,7 +151,7 @@
         <img src="img/icon/language.svg"/>
         <select v-model="selector_lang" @change="setLang($event)">
           <option value="en">English</option>
-          <option value="local">中文</option>
+          <option value="local">日本語</option>
         </select>
       </div>
     </div>
@@ -178,22 +178,30 @@
             </div>
           </div>
         </div>
-        <div class="atoz-wrap" v-if="Object.keys(anchorList).includes('zhuyin')">
+        <div class="atoz-wrap" v-if="Object.keys(anchorList).includes('resourceKana')">
+          <div class="atoz-title">{{$t('message.index_kana')}}:</div>
+          <div class="atoz-field">
+            <div class="link-field" v-for="(kana, index) in anchorList.resourceKana">
+              <a :id="'kana'+index" @click="search(kana, 'resourceKana', 'kana'+index)">{{kana}}</a>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="atoz-wrap" v-if="Object.keys(anchorList).includes('zhuyin')">
           <div class="atoz-title">{{$t('message.index_zhuyin')}}:</div>
           <div class="atoz-field">
             <div class="link-field" v-for="(zhuyin, index) in anchorList.zhuyin">
               <a :id="'zhutin'+index" @click="search(zhuyin, 'zhuyin', 'zhutin'+index)">{{zhuyin}}</a>
             </div>
           </div>
-        </div>
-        <div class="atoz-wrap" v-if="Object.keys(anchorList).includes('strokes')">
+        </div> -->
+        <!-- <div class="atoz-wrap" v-if="Object.keys(anchorList).includes('strokes')">
           <div class="atoz-title">{{$t('message.index_strokes')}}:</div>
           <div class="atoz-field">
             <div class="link-field" v-for="(strokes, index) in anchorList.strokes">
               <a :id="'strokes'+index" @click="search(strokes, 'strokes', 'strokes'+index)">{{strokes}}</a>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="sort-wrap">
           <div class="sort-title">{{$t('message.index_sort')}}:</div>
           <div class="btn-wrap">
@@ -201,6 +209,7 @@
             <button @click="processSort(buttons[1])" v-bind:class="buttons[1].options.order">{{$t('message.btn_sort_2')}}</button>
             <button @click="processSort(buttons[2])" v-bind:class="buttons[2].options.order">{{$t('message.btn_sort_3')}}</button>
             <button @click="processSort(buttons[3])" v-bind:class="buttons[3].options.order">{{$t('message.btn_sort_4')}}</button>
+            <button @click="processSort(buttons[4])" v-bind:class="buttons[4].options.order"  v-if="Object.keys(anchorList).includes('resourceKana')">{{$t('message.btn_sort_5')}}</button>
             <!-- <button v-for="(buttonInfo, index) in buttons" @click="processSort(buttonInfo)" v-bind:class="buttonInfo.options.order">{{buttonInfo.btnName}}</button> -->
           </div>
         </div>
@@ -455,8 +464,9 @@
     data: {
       anchorList: {
         englishAlphabet: [],
-        zhuyin: [],
-        strokes: []
+        resourceKana: []
+        // zhuyin: [],
+        // strokes: []
       },
       searchTerm: '',
       temp_anchorList: {},
@@ -485,6 +495,13 @@
         {
           btnName: 'btn_sort_4',
           sortName: 'category',
+          options: {
+            order: ''
+          }
+        },
+        {
+          btnName: 'btn_sort_4',
+          sortName: 'resourceKana',
           options: {
             order: ''
           }
@@ -904,6 +921,10 @@
                               <div class="row hide">\
                                 <div class="title">英文</div class="title">\
                                 <div class="englishAlphabet">${res.englishAlphabet}</div>\
+                              </div>\
+                              <div class="row hide">\
+                                <div class="title">カナ</div class="title">\
+                                <div class="resourceKana">${res.resourceKana}</div>\
                               </div>`;
       let moreLabel = document.createElement('label');
       moreLabel.setAttribute("for", 'checkbox_' + index);
@@ -953,7 +974,7 @@
         this.show = true;
         switch (type) {
           case 'latestNews':
-            this.dialogHead_title = '公告';
+            this.dialogHead_title = 'ニュース';
             break;
           default:
             this.dialogHead_title = ' ';
@@ -967,8 +988,8 @@
   });
 
   async function directTo(id, url) {
-    let exist = await checkSessionExist();
-    if(exist) {
+    // let exist = await checkSessionExist();
+    // if(exist) {
       if(browser != 'safari') {
         window.open(url, '_blank');
       }
@@ -994,9 +1015,9 @@
           // self.displayNumber = res.displayNumber;
         }
       });
-    } else {
-      window.location.replace("authLogin.html");
-    }
+    // } else {
+    //   window.location.replace("authLogin.html");
+    // }
   }
   function checkSessionExist() {
     return new Promise((resolve, reject) => {
@@ -1023,10 +1044,10 @@
   function errorMsg (code) {
     switch (code) {
       case 1:
-        alert('沒有該連結喔!');
+        alert('そのようなリンクはありません！');
         break;
       default:
-        alert('未知訊息');
+        alert('不明な情報');
     }
   }
 
@@ -1069,7 +1090,7 @@
 
     // Init list
     var options = {
-      valueNames: ['numbering', 'resourceName', 'resourceType', 'startDate', 'expireDate', 'faculty', 'subject', 'category', 'type', 'publisher', 'language', 'resourceDescribe', 'zhuyin', 'strokes', 'englishAlphabet'],
+      valueNames: ['numbering', 'resourceName', 'resourceType', 'startDate', 'expireDate', 'faculty', 'subject', 'category', 'type', 'publisher', 'language', 'resourceDescribe', 'zhuyin', 'strokes', 'englishAlphabet', 'resourceKana'],
       page: '<?php echo $numberOfDatabaseOnPage; ?>',
       pagination: {
         innerWindow: 1,

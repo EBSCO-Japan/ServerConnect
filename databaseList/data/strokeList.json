@@ -1,8 +1,9 @@
 {
   "local": {
     "zhuyin": [],
-    "englishAlphabet":[],
-    "strokes":[]
+    "englishAlphabet":["A","B","C","D","E","F","G","H"],
+    "strokes":[],
+    "resourceKana":["ア","カ","サ","タ","ナ","ハ","マ","ヤ","ラ","ワ"]
   },
   "en": {
     "englishAlphabet":[]

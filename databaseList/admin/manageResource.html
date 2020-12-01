@@ -58,14 +58,14 @@
         <img src="../img/icon/language.svg"/>
         <select v-model="selector_lang" @change="setLang($event)">
           <option value="en">English</option>
-          <option value="local">中文</option>
+          <option value="local">日本語</option>
         </select>
       </div>
     </section>
     <div id="listField" class="list-field">
       <div class="search-wrap">
         <div class="search-frame">
-          <input type="text" class="search" :placeholder="$t('message.tag_chinese')" v-model="searchKeyword" />
+          <input type="text" class="search" placeholder="リソース名を検索" v-model="searchKeyword" />
         </div>
       </div>
       <div class="list-container">
@@ -75,7 +75,7 @@
             <button @click="deleteResource(database)"><img src="../img/icon/delete.svg"/></button>
           </div>
           <div class="tag-wrap">
-            <button @click="changeTag(database, 'local')" :class="[database.tag === 'local'? 'taged': '']">{{$t('message.tag_chinese')}}</button>
+            <button @click="changeTag(database, 'local')" :class="[database.tag === 'local'? 'taged': '']">{{$t('message.tag_japanese')}}</button>
             <button @click="changeTag(database, 'en')" :class="[database.tag === 'en'? 'taged': '']">{{$t('message.tag_english')}}</button>
           </div>
           <div class="multi-lang-field">
@@ -176,6 +176,10 @@
                 <div v-else>{{$t('message.selector_no')}}</div>
               </div>
             </div> -->
+            <div v-if="database.tag === 'local'" class="row">
+              <div class="title">{{$t('message.resource_resourceKana')}}</div>
+              <div class="content">{{database.local.resourceKana}}</div>
+            </div>
             <div class="row">
               <div class="title">{{$t('message.resource_startDate')}}</div>
               <div class="content">{{database.startDate}}</div>
@@ -206,7 +210,7 @@
     <div class="dialogue-frame">
       <img src="../img/icon/close.svg" class="close" @click="closeForm">
       <div class="tag-wrap">
-        <button @click="changeTag(resource, 'local')" :class="[resource.tag === 'local'? 'taged': '']">{{$t('message.tag_chinese')}}</button>
+        <button @click="changeTag(resource, 'local')" :class="[resource.tag === 'local'? 'taged': '']">{{$t('message.tag_japanese')}}</button>
         <button @click="changeTag(resource, 'en')" :class="[resource.tag === 'en'? 'taged': '']">{{$t('message.tag_english')}}</button>
       </div>
       <div class="dialogue-content">
@@ -256,6 +260,10 @@
           <div class="row">
             <div class="title">{{$t('message.resource_resourceName')}}</div>
             <input type="text" v-model="resource.local.resourceName">
+          </div>
+          <div class="row">
+            <div class="title">{{$t('message.resource_resourceKana')}}</div>
+            <input type="text" v-model="resource.local.resourceKana">
           </div>
           <div class="row">
             <div class="title">{{$t('message.resource_resourceType')}}</div>
@@ -334,7 +342,7 @@
       <div class="btn-frame">
         <button v-if="btnType === 'add'" @click="sendForm">{{$t('message.resource_btn_add')}}</button>
         <button v-else-if="btnType === 'modify'" @click="sendForm">{{$t('message.resource_btn_modify')}}</button>
-        <button @click="copy">{{$t('message.btn_copy')}}</button>
+        <button @click="copy">Copy</button>
       </div>
     </div>
   </div>
@@ -372,14 +380,14 @@
       <div class="dialogue-body" v-if="type === 'deleteResource'">
         {{message}} <span class="resource-name">{{resourceName}}</span>?
         <div class="btn-frame">
-          <button @click="deleteResource">{{$t('message.btn_confirm')}}</button>
-          <button @click="closeDialogue">{{$t('message.btn_cancel')}}</button>
+          <button @click="deleteResource">確定</button>
+          <button @click="closeDialogue">取消</button>
         </div>
       </div>
       <div class="dialogue-body" v-else>
         {{message}}
         <div class="btn-frame">
-          <button @click="closeDialogue">{{$t('message.btn_confirm')}}</button>
+          <button @click="closeDialogue">確定</button>
         </div>
       </div>
     </div>
@@ -516,6 +524,7 @@
           },
           "local":{
             "resourceName": "",
+            "resourceKana":"",
             "resourceType": "",
             "faculty": "",
             "department": "",
@@ -620,8 +629,8 @@
       data: {
         show: false,
         type: '',
-        title: '測試標題',
-        message: '測試內容',
+        title: 'ダミータイトル',
+        message: 'ダミーの内容',
         resourceName: '',
         resource: ''
       },
@@ -631,21 +640,21 @@
           switch (type) {
             case 'deleteResource':
               this.title = '注意';
-              this.message = `您確定要刪除`;
+              this.message = `削除しますか？`;
               this.resourceName = database.resourceName;
               this.resource = JSON.stringify(database);
               break;
             case 'add_success':
-              this.title = '訊息';
-              this.message = '新增成功';
+              this.title = 'お知らせ';
+              this.message = '追加しました';
               break;
             case 'modify_success':
-              this.title = '訊息';
-              this.message = '修改成功';
+              this.title = 'お知らせ';
+              this.message = '修正しました';
               break;
             case 'delete_success':
-              this.title = '訊息';
-              this.message = '刪除成功';
+              this.title = 'お知らせ';
+              this.message = '削除しました';
               break;
           }
           this.show = true;
