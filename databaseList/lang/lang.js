@@ -23,6 +23,9 @@ const messages = {
       // All Latest News page
       h1_all_latestNews: 'Latest News',
       // admin index page
+      adminIndex_header_title: 'Database Listing management system',
+      adminIndex_title: 'Database Listing Admin',
+      adminIndex_subtitle: 'Database Listing management system',
       adminIndex_account: 'Account',
       adminIndex_password: 'Password',
       adminIndex_account_pwd_rror: 'Invalid Account/Password',
@@ -205,6 +208,9 @@ const messages = {
       // All Latest News page
       h1_all_latestNews: '最新ニュース',
       // admin index page
+      adminIndex_header_title: '電子データベース管理インターフェース',
+      adminIndex_title: '電子データベース管理インターフェース',
+      adminIndex_subtitle: 'Database Listing Admin',
       adminIndex_account: 'アカウント',
       adminIndex_password: 'パスワード',
       adminIndex_account_pwd_rror: 'アカウントのパスワードが正しくありません',
