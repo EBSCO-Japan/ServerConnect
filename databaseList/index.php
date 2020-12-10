@@ -88,7 +88,7 @@
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>図書館 - データベース一覧 powered by EBSCO Database Listing</title>
-  <link rel="stylesheet" type="text/css" href="lib/css/index.css?v=1.1"/>
+  <link rel="stylesheet" type="text/css" href="lib/css/index.css?v=2.2"/>
   <script>
     var ua = navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i),
       browser;
@@ -182,7 +182,7 @@
           <div class="atoz-title">{{$t('message.index_kana')}}:</div>
           <div class="atoz-field">
             <div class="link-field" v-for="(kana, index) in anchorList.resourceKana">
-              <a :id="'kana'+index" @click="search(kana, 'resourceKana', 'kana'+index)">{{kana}}</a>
+              <a :id="'kana'+index" @click="search(kana, 'kanaRow', 'kana'+index)">{{kana}}</a>
             </div>
           </div>
         </div>
@@ -465,8 +465,6 @@
       anchorList: {
         englishAlphabet: [],
         resourceKana: []
-        // zhuyin: [],
-        // strokes: []
       },
       searchTerm: '',
       temp_anchorList: {},
@@ -925,6 +923,10 @@
                               <div class="row hide">\
                                 <div class="title">カナ</div class="title">\
                                 <div class="resourceKana">${res.resourceKana}</div>\
+                              </div>
+                              <div class="row hide">\
+                                <div class="title">カナ row</div class="title">\
+                                <div class="kanaRow">${res.kanaRow}</div>\
                               </div>`;
       let moreLabel = document.createElement('label');
       moreLabel.setAttribute("for", 'checkbox_' + index);
@@ -1090,7 +1092,7 @@
 
     // Init list
     var options = {
-      valueNames: ['numbering', 'resourceName', 'resourceType', 'startDate', 'expireDate', 'faculty', 'subject', 'category', 'type', 'publisher', 'language', 'resourceDescribe', 'zhuyin', 'strokes', 'englishAlphabet', 'resourceKana'],
+      valueNames: ['numbering', 'resourceName', 'resourceType', 'startDate', 'expireDate', 'faculty', 'subject', 'category', 'type', 'publisher', 'language', 'resourceDescribe', 'zhuyin', 'strokes', 'englishAlphabet', 'resourceKana','kanaRow'],
       page: '<?php echo $numberOfDatabaseOnPage; ?>',
       pagination: {
         innerWindow: 1,

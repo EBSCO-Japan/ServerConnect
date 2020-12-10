@@ -1,4 +1,9 @@
 <?php
+  ini_set("display_errors", 1);
+  ini_set("track_errors", 1);
+  ini_set("html_errors", 1);
+  error_reporting(E_ALL);
+
   include '_header.php';
   include '_response.php';
 
@@ -9,36 +14,48 @@
   $getResourceListJsonData = file_get_contents($jsonFile_resource_direct);
   $resourceList = json_decode($getResourceListJsonData, true);
 
-  // get strokes list
-  $getStrokesJsonData = file_get_contents('../data/UniHanO.json');
-  $strokes = json_decode($getStrokesJsonData, true);
+  // Build the array for row and dan
+  $ary_kataHira_list = [];
+  $ary_kataHira_list["ア"] = "ぁあァアぃいィイぅうゥウぇえェエぉおォオ";
+  $ary_kataHira_list["カ"] = "かがカガきぎキギくぐクグけげケゲこごコゴ";
+  $ary_kataHira_list["サ"] = "さざサザしじシジすずスズせぜセゼそぞソゾ";
+  $ary_kataHira_list["タ"] = "ただタダちぢチヂっつづッツヅてでテデとどトド";
+  $ary_kataHira_list["ナ"] = "なナにニぬヌねネのノ";
+  $ary_kataHira_list["ハ"] = "はばぱハバパひびぴヒビピふぶぷフブプへべぺヘベペほぼぽホボポ";
+  $ary_kataHira_list["マ"] = "まマみミむムめメもモ";
+  $ary_kataHira_list["ヤ"] = "ゃやャヤゅゆュユょよョヨ";
+  $ary_kataHira_list["ラ"] = "らラりリるルれレろロ";
+  $ary_kataHira_list["ワ"] = "ゎわヮワゐヰゑヱをヲんンヴヵヶ";
 
   // for local
   foreach($resourceList as $key_lang => $resource) {
-    $chars = preg_split('/(?<!^)(?!$)/u', $resource['local']['resourceName']);
-    $firstChar = $chars[0];
-    $resultExist = false;
-    foreach($strokes as $stroke) {
-      if(strcasecmp($firstChar, $stroke['char']) == 0) {
-        $zhuyin = preg_split('/(?<!^)(?!$)/u', $stroke['zhuyin']);
-        $firstZhuyin = $zhuyin[0];
-        $resourceList[$key_lang]['local']['zhuyin'] = $firstZhuyin;
-        $resourceList[$key_lang]['local']['englishAlphabet'] = '';
+    $resourceList[$key_lang]['local']['kanaRow'] = '';
+    $resourceList[$key_lang]['local']['englishAlphabet'] = '';
 
-        if(strlen(strval($stroke['strokes'])) < 2) {
-          $resourceList[$key_lang]['local']['strokes'] = '0'.$stroke['strokes'];
-        } else {
-          $resourceList[$key_lang]['local']['strokes'] = $stroke['strokes'];
+    // process Kana
+    if(trim($resource['local']['resourceKana']) !== '') {
+      $chars = preg_split('/(?<!^)(?!$)/u', $resource['local']['resourceKana']);
+      $firstChar = $chars[0];
+  
+      foreach($ary_kataHira_list as $kataHira_key => $kataHira_row) {
+        $pos = strrpos($kataHira_row, $firstChar);
+  
+        // if found in a row
+        if($pos) {
+          $resourceList[$key_lang]['local']['kanaRow'] = $kataHira_key;
         }
-
-        $resultExist = true;
-        break;
       }
+    }
 
-      if(!$resultExist) {
-        $resourceList[$key_lang]['local']['englishAlphabet'] = $firstChar;
-        $resourceList[$key_lang]['local']['zhuyin'] = '';
-        $resourceList[$key_lang]['local']['strokes'] = '0';
+    // process english alphabet
+    if(trim($resource['local']['resourceName']) !== '') {
+      $chars = preg_split('/(?<!^)(?!$)/u', $resource['local']['resourceName']);
+      $firstChar = $chars[0];
+
+      $alphas = array_merge(range('A', 'Z'), range('a', 'z'));
+      
+      if(in_array($firstChar, $alphas, TRUE)) {
+        $resourceList[$key_lang]['local']['englishAlphabet'] = strtoupper($firstChar);
       }
     }
   }
@@ -53,39 +70,37 @@
       $firstChar = '';
     }
 
-    $resourceList[$key_lang]['en']['englishAlphabet'] = $firstChar;
-    $resourceList[$key_lang]['en']['zhuyin'] = '';
-    $resourceList[$key_lang]['en']['strokes'] = '0';
+    $resourceList[$key_lang]['en']['englishAlphabet'] = strtoupper($firstChar);
   }
 
-  // write back
-  if(is_writable($jsonFile_direct)) {
+  // overwrite the data in json file
+  if(is_writable($jsonFile_resource_direct)) {
     file_put_contents($jsonFile_resource_direct, json_encode($resourceList, JSON_UNESCAPED_UNICODE));
   } else {
     responseError(1001);
   }
 
-  // sleep 3sec
-  sleep(3);
+  // sleep 1sec
+  sleep(1);
 
-  ////////////////////////////// generate the alphabet list ///////////////////////////////////////
+  ////////////////////////////// generate the atoz index ///////////////////////////////////////
 
   // get resource list
   $getNewResourceListJsonData = file_get_contents($jsonFile_resource_direct);
   $newResourceList = json_decode($getNewResourceListJsonData, true);
 
-  $allZhuYin = 'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ';
+  $allKanaRow = 'アカサタナハマヤラワ';
   $allEnglishAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  $zhuYins = preg_split('/(?<!^)(?!$)/u', $allZhuYin);
+  
+  $ary_kanaRows = preg_split('/(?<!^)(?!$)/u', $allKanaRow);
   $englishAlphabets = str_split($allEnglishAlphabet);
-  $zhuyin_map = [];
+  $kanaRow_local_map = [];
   $englishAlphabet_en_map = [];
   $englishAlphabet_local_map = [];
-  $strokes_map = [];
 
   // init map
-  foreach($zhuYins as $key => $row) {
-    $zhuyin_map[$row] = false;
+  foreach($ary_kanaRows as $key => $row) {
+    $kanaRow_local_map[$row] = false;
   }
 
   foreach($englishAlphabets as $key => $row) {
@@ -93,13 +108,6 @@
     $englishAlphabet_local_map[$row] = false;
   }
 
-  for($loop = 1; $loop < 50; $loop++) {
-    if($loop < 10) {
-      $strokes_map['0'.strval($loop)] = false;
-    } else {
-      $strokes_map[strval($loop)] = false;
-    }
-  }
 
   // match with the local map
   // The current Time is to check the expiry date of eResource
@@ -117,20 +125,16 @@
       }
     }
 
-    // add the stroke, zhuyin in list
+    // add the kana and english alphabet
     if($isInExpiryDate) {
       // match with the local map
-      if(!empty(trim($row['local']['zhuyin']))) {
-        $zhuyin_map[$row['local']['zhuyin']] = true;
+      if(!empty(trim($row['local']['kanaRow']))) {
+        $kanaRow_local_map[$row['local']['kanaRow']] = true;
       }
   
       if(preg_match("/^[a-zA-Z]$/", $row['local']['englishAlphabet'])) {
         $char_uppercase = strtoupper($row['local']['englishAlphabet']);
         $englishAlphabet_local_map[$char_uppercase] = true;
-      }
-  
-      if($row['local']['strokes'] !== '0') {
-        $strokes_map[$row['local']['strokes']] = true;
       }
 
       // match with the en map
@@ -143,14 +147,13 @@
 
   // create the list
   $result = [];
-  $result['local']['zhuyin'] = [];
+  $result['local']['resourceKana'] = [];
   $result['local']['englishAlphabet'] = [];
-  $result['local']['strokes'] = [];
   $result['en']['englishAlphabet'] = [];
 
-  foreach($zhuyin_map as $key => $row) {
+  foreach($kanaRow_local_map as $key => $row) {
     if($row) {
-      array_push($result['local']['zhuyin'], $key);
+      array_push($result['local']['resourceKana'], $key);
     }
   }
 
@@ -160,20 +163,14 @@
     }
   }
 
-  foreach($strokes_map as $key => $row) {
-    if($row) {
-      array_push($result['local']['strokes'], $key);
-    }
-  }
-
   foreach($englishAlphabet_en_map as $key => $row) {
     if($row) {
       array_push($result['en']['englishAlphabet'], $key);
     }
   }
-  
+
   // write back
-  if(is_writable($jsonFile_direct)) {
+  if(is_writable($jsonFile_strokes_direct)) {
     file_put_contents($jsonFile_strokes_direct, json_encode($result, JSON_UNESCAPED_UNICODE));
   } else {
     responseError(1001);
