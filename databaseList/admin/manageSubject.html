@@ -54,15 +54,15 @@
         <img src="../img/icon/language.svg"/>
         <select v-model="selector_lang" @change="setLang($event)">
           <option value="en">English</option>
-          <option value="local">中文</option>
+          <option value="local">日本語</option>
         </select>
       </div>
     </div>
     <section id="subjectSetField" class="setting-wrap">
       <div class="subject-frame" v-for="(subjectInfo, index) in subjects">
-        <button class="btn-icon delete-subject-block" name="刪除整個主題區" title="刪除整個主題區" @click="deleteSubjectBlock(subjectInfo)"><img src="../img/icon/delete.svg"/></button>
+        <button class="btn-icon delete-subject-block" name="刪除整個主題區" title="全体を削除する" @click="deleteSubjectBlock(subjectInfo)"><img src="../img/icon/delete.svg"/></button>
         <div class="tag-wrap">
-          <button @click="changeTag(subjectInfo, 'local')" :class="[subjectInfo.tag === 'local'? 'taged': '']">{{$t('message.tag_chinese')}}</button>
+          <button @click="changeTag(subjectInfo, 'local')" :class="[subjectInfo.tag === 'local'? 'taged': '']">{{$t('message.tag_japanese')}}</button>
           <button @click="changeTag(subjectInfo, 'en')" :class="[subjectInfo.tag === 'en'? 'taged': '']">{{$t('message.tag_english')}}</button>
         </div>
         <div class="multi-lang-field" v-show="subjectInfo.tag === 'en'">
@@ -83,7 +83,7 @@
               <select v-model="subject.className" class="subject-class">
                 <option v-for="option in subjectOptions" :value="option.className">{{option.displayName}}
               </select>
-              <button @click="deleteSubject(index, subject)" class="btn-icon" name="刪除這項主題" title="刪除這項主題"><img src="../img/icon/delete.svg"/></button>
+              <button @click="deleteSubject(index, subject)" class="btn-icon" name="刪除這項主題" title="このサブジェクトを削除する"><img src="../img/icon/delete.svg"/></button>
             </li>
           </ul>
         </div>
@@ -104,7 +104,7 @@
               <select v-model="subject.className" class="subject-class">
                 <option v-for="option in subjectOptions" :value="option.className">{{option.displayName}}
               </select>
-              <button @click="deleteSubject(index, subject)" class="btn-icon" name="刪除這項主題" title="刪除這項主題"><img src="../img/icon/delete.svg"/></button>
+              <button @click="deleteSubject(index, subject)" class="btn-icon" name="刪除這項主題" title="このサブジェクトを削除する"><img src="../img/icon/delete.svg"/></button>
             </li>
           </ul>
         </div>
@@ -246,7 +246,7 @@
             this.dialogHead_title = '注意';
             break;
           default:
-            this.dialogHead_title = '訊息';
+            this.dialogHead_title = 'メッセージ';
             break;
         }
       },
@@ -307,15 +307,15 @@
         'local': [
           {
             className: 'resourceType',
-            displayName: '資源類型'
+            displayName: 'リソースタイプ'
           },
           {
             className: 'faculty',
-            displayName: '適用學院'
+            displayName: '学部'
           },
           {
             className: 'subject',
-            displayName: '主題'
+            displayName: 'サブジェクト'
           },
           {
             className: 'category',
@@ -323,19 +323,19 @@
           },
           {
             className: 'type',
-            displayName: '類型'
+            displayName: 'タイプ'
           },
           {
             className: 'publisher',
-            displayName: '出版商'
+            displayName: '出版社'
           },
           {
             className: 'language',
-            displayName: '語言'
+            displayName: '言語'
           },
           {
             className: 'default',
-            displayName: '請選擇欄位'
+            displayName: 'フィールドを選択してください'
           }
         ]
       }
@@ -438,7 +438,7 @@
             } else {
               let messageInfo = {
                 title: '',
-                content: '更新成功',
+                content: '更新しました',
                 warning: ''
               }
               dialogue.setDialogue('message', messageInfo);
@@ -476,7 +476,7 @@
         let messageInfo = {
           title: '',
           content: '',
-          warning: `您確定要刪除嗎?`
+          warning: '削除しますか?'
         }
         dialogue.setDialogue('deleteSubjectBlock', messageInfo);
         // this.subjects.splice(this.subjects.indexOf(subjectBlock), 1);

@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>身份設定</title>
+    <title>所属設定</title>
     <link rel="stylesheet" type="text/css" href="../lib/css/manageAuth.css?v=4.0"/>
   </head>
 <body>
@@ -54,7 +54,7 @@
         <img src="../img/icon/language.svg"/>
         <select v-model="selector_lang" @change="setLang($event)">
           <option value="en">English</option>
-          <option value="local">中文</option>
+          <option value="local">日本語</option>
         </select>
       </div>
     </div>
@@ -385,7 +385,7 @@
           this.$set(Object, 'deleted', false);
           this.deleteInRefList(Object.value, field);
         } else {
-          alert('請先刪除所有子項目!');
+          alert('先にサブ項目をすべて削除してください');
         }
       },
       deleteInRefList(number, part) {
@@ -433,7 +433,7 @@
               dialogue.setDialogue('expired');
             } else {
               self.init();
-              alert("更新成功");
+              alert("更新しました");
             }
           }
         });

@@ -54,7 +54,7 @@
         <img src="../img/icon/language.svg"/>
         <select v-model="selector_lang" @change="setLang($event)">
           <option value="en">English</option>
-          <option value="local">中文</option>
+          <option value="local">日本語</option>
         </select>
       </div>
     </section>
@@ -382,8 +382,8 @@
       data: {
         show: false,
         type: '',
-        title: '測試標題',
-        message: '測試內容',
+        title: 'タイトル',
+        message: '内容',
         resourceName: '',
         resource: ''
       },
@@ -392,12 +392,12 @@
           this.type = type;
           switch (type) {
             case 'modify_success':
-              this.title = '訊息';
-              this.message = '修改成功';
+              this.title = 'メッセージ';
+              this.message = '更新しました';
               break;
             case 'delete_success':
-              this.title = '訊息';
-              this.message = '刪除成功';
+              this.title = 'メッセージ';
+              this.message = '削除しました';
               break;
           }
           this.show = true;

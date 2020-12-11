@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>最新消息</title>
+    <title>ニュース</title>
     <link rel="stylesheet" type="text/css" href="../lib/css/manageLatestNews.css?v=4.0"/>
     <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
   </head>
@@ -58,7 +58,7 @@
         <img src="../img/icon/language.svg"/>
         <select v-model="selector_lang" @change="setLang($event)">
           <option value="en">English</option>
-          <option value="local">中文</option>
+          <option value="local">日本語</option>
         </select>
       </div>
     </div>
@@ -69,7 +69,7 @@
           <button @click="updateNewsField()"><img src="../img/icon/edit.svg"/></button>
         </div>
         <div class="tag-wrap">
-          <button @click="changeTag(latestNewsField, 'local')" :class="[latestNewsField.tag === 'local'? 'taged': '']">{{$t('message.tag_chinese')}}</button>
+          <button @click="changeTag(latestNewsField, 'local')" :class="[latestNewsField.tag === 'local'? 'taged': '']">{{$t('message.tag_japanese')}}</button>
           <button @click="changeTag(latestNewsField, 'en')" :class="[latestNewsField.tag === 'en'? 'taged': '']">{{$t('message.tag_english')}}</button>
         </div>
         <div class="multi-lang-field">
@@ -128,7 +128,7 @@
           <button @click="deleteNews(latestNews)"><img src="../img/icon/delete.svg"/></button>
         </div>
         <div class="tag-wrap">
-          <button @click="changeTag(latestNews, 'local')" :class="[latestNews.tag === 'local'? 'taged': '']">{{$t('message.tag_chinese')}}</button>
+          <button @click="changeTag(latestNews, 'local')" :class="[latestNews.tag === 'local'? 'taged': '']">{{$t('message.tag_japanese')}}</button>
           <button @click="changeTag(latestNews, 'en')" :class="[latestNews.tag === 'en'? 'taged': '']">{{$t('message.tag_english')}}</button>
         </div>
         <div class="multi-lang-field" v-bind:class="{ expand: latestNews.expand}" v-if="latestNews.tag === 'local'">
@@ -173,7 +173,7 @@
       </div>
       <div class="dialogue-body" v-if="sendType === 'updateNewsField'">
         <div class="tag-wrap-s">
-          <button @click="changeTag(newsField, 'local')" :class="[newsField.tag === 'local'? 'taged': '']">{{$t('message.tag_chinese')}}</button>
+          <button @click="changeTag(newsField, 'local')" :class="[newsField.tag === 'local'? 'taged': '']">{{$t('message.tag_japanese')}}</button>
           <button @click="changeTag(newsField, 'en')" :class="[newsField.tag === 'en'? 'taged': '']">{{$t('message.tag_english')}}</button>
         </div>
         <div class="multi-lang-field">
@@ -200,7 +200,7 @@
       </div>
       <div class="dialogue-body" v-else>
         <div class="tag-wrap-s">
-          <button @click="changeTag(news, 'local')" :class="[news.tag === 'local'? 'taged': '']">{{$t('message.tag_chinese')}}</button>
+          <button @click="changeTag(news, 'local')" :class="[news.tag === 'local'? 'taged': '']">{{$t('message.tag_japanese')}}</button>
           <button @click="changeTag(news, 'en')" :class="[news.tag === 'en'? 'taged': '']">{{$t('message.tag_english')}}</button>
         </div>
         <div class="multi-lang-field" v-show="news.tag === 'local'">
@@ -483,18 +483,18 @@
         },
         setDisplayForm: function(type, data = '') {
           if(type === 'updateNews') {
-            this.btnName = '修改';
-            this.headTitle = '修改內容';
+            this.btnName = '更新';
+            this.headTitle = '内容を更新';
             this.news = JSON.parse(JSON.stringify(data));
             replaceCKEditor();
           } else if(type === 'addNews') {
-            this.btnName = '新增';
-            this.headTitle = '新增最新消息';
+            this.btnName = '追加';
+            this.headTitle = 'ニュースを追加';
             this.news = JSON.parse(JSON.stringify(this.template_newsField));
             replaceCKEditor();
           } else if (type === 'updateNewsField') {  // done
-            this.btnName = '修改';
-            this.headTitle = '修改內容';
+            this.btnName = '更新';
+            this.headTitle = '更新しました';
             this.newsField = JSON.parse(JSON.stringify(data));
           }
           this.show = true;
