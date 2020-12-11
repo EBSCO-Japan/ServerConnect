@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-  date_default_timezone_set('Asia/Taipei');
+  date_default_timezone_set('Asia/Tokyo');
   $jsonFile_direct = 'data/eResourceList.json';
 
   // get resource list
@@ -94,20 +94,20 @@
   </head>
 <body>
   <section>
-    <h1>電子資料庫</h1>
+    <h1>データベースリスト</h1>
     <div class="browser-notification">
-      我們偵測到您使用 IE 瀏覽器！為了提供您最佳的瀏覽體驗，建議您改用 Windows 內建之 Edge 瀏覽器，或其他瀏覽器。
-      ※ 提醒您：微軟已於2016年1月停止對舊版IE提供安全性更新， 詳情請見<a href="https://www.microsoft.com/zh-tw/WindowsForBusiness/End-of-IE-support" target="_blank">《微軟停止支援公告》</a>
-      建議您立即升級改用Windows Edge 瀏覽器或選用其他瀏覽器：	
+      Internet Explorer（インターネット・エクスプローラー、IE）をご利用のようです。快適にご利用いただくために、WindowsのEdgeや、その他のブラウザをご使用ください。
+      <div>※IE10以前のバージョンは、Microsoft社によるサポートが終了しています。
+      <a href="https://www.microsoft.com/ja-jp/microsoft-365/windows/end-of-ie-support?rtc=1" target="_blank">"古いバージョンの Internet Explorer のサポート終了"</a></div>
       <ul>
         <li>
-          <a href="https://www.google.com/intl/zh-TW/chrome/" target="_blank">【點此下載 Google Chrome】</a>
+          <a href="https://www.google.com/intl/ja_jp/chrome/" target="_blank">【Google Chromeをダウンロード】</a>
         </li>
         <li>
-          <a href="https://www.mozilla.org/zh-TW/firefox/new/" target="_blank">【點此下載 Firefox】</a>
+          <a href="https://www.mozilla.org/ja/firefox/new/" target="_blank">【Firefoxをダウンロード】</a>
         </li>
         <li>
-          <a href="https://www.microsoft.com/zh-tw/edge" target="_blank">【點此下載Edge】</a>
+          <a href="https://www.mozilla.org/ja/firefox/new/" target="_blank">【Edgeをダウンロード】</a>
         </li>
       </ul>
     </div>
@@ -116,7 +116,7 @@
     <div>
       <div class="search-wrap">
         <div class="search-frame">
-          <input type="text" class="search" placeholder="搜尋資源" id="searchBoxArea" onkeyup="searchKeyword()"/>
+          <input type="text" class="search" placeholder="リソースを検索" id="searchBoxArea" onkeyup="searchKeyword()"/>
         </div>
       </div>
       <div class="content-field" id="databaseList">
@@ -204,23 +204,23 @@
 
   let listTitles = [];
   listTitles['local'] = {
-    "resourceName": '資源名稱',
-    "resourceUrlTitle": '連結',
-    "resourceUrlDisplayName": '點我連結',
-    "isProxy": '代理',
-    "resourceType": '資源類型',
-    "startDate": '起訂日期',
-    "expireDate": '迄訂日期',
-    "faculty": '適用學院',
-    "department": '適用科系',
-    "subject": '主題',
+    "resourceName": 'リソース名',
+    "resourceUrlTitle": 'リンク',
+    "resourceUrlDisplayName": 'クリック',
+    "isProxy": 'プロキシ',
+    "resourceType": 'リソースタイプ',
+    "startDate": '開始日',
+    "expireDate": '終了日',
+    "faculty": '学部',
+    "department": '学科',
+    "subject": 'サブジェクト',
     "category": '分類',
-    "type": '類型',
-    "publisher": '出版商',
-    "language": '語言',
-    "resourceDescribe": '資源簡述',
-    "relevanceUrlDescribe": '相關連結',
-    "moreDetail": '更多...'
+    "type": 'タイプ',
+    "publisher": '出版社',
+    "language": '言語',
+    "resourceDescribe": 'リソースの説明',
+    "relevanceUrlDescribe": '関連URL詳細',
+    "moreDetail": '詳細'
   }
 
 
@@ -309,7 +309,7 @@
                                 <div class="strokes">'+res.strokes+'</div>\
                               </div>\
                               <div class="row hide">\
-                                <div class="title">英文</div class="title">\
+                                <div class="title">アルファベット</div class="title">\
                                 <div class="englishAlphabet">'+res.englishAlphabet+'</div>\
                               </div>';
       let moreLabel = document.createElement('label');
@@ -375,10 +375,10 @@
   function errorMsg (code) {
     switch (code) {
       case 1:
-        alert('沒有該連結喔!');
+        alert('そのようなリンクはありません。');
         break;
       default:
-        alert('未知訊息');
+        alert('不明なメッセージ');
     }
   }
 
