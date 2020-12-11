@@ -204,7 +204,7 @@ const messages = {
       index_popular_frameTitle: '人気のリソース',
       index_popular_title: '標題',
       index_popular_clickAmount: 'クリック数',
-      index_commonly_title: '人気のあるリソース',
+      index_commonly_title: 'おすすめのリソース',
       // All Latest News page
       h1_all_latestNews: '最新ニュース',
       // admin index page
@@ -301,11 +301,11 @@ const messages = {
       clickingReport_userIdentity: 'ユーザーアイデンティティ',
       clickingReport_download_the_report: 'ダウンロード',
       // commonly resource
-      h1_commonlyResource: '人気のリソース',
-      commonlyResource_showOnFrontStage: '前に表示',
-      commonlyResource_noResource: '人気のリソースはありません',
-      commonlyResource_resourceList: '全てのリソース',
-      commonlyResource_commonResourceList: '人気のリソース',
+      h1_commonlyResource: 'おすすめのリソース',
+      commonlyResource_showOnFrontStage: '画面に「おすすめのリソース」を表示する',
+      commonlyResource_noResource: 'おすすめのリソースはありません',
+      commonlyResource_resourceList: 'リソース一覧から選択',
+      commonlyResource_commonResourceList: 'おすすめのリソース',
       // dialogue
       dialogue_title: 'タイトル',
       dialogue_title_warning: '警告',
@@ -351,7 +351,7 @@ const messages = {
       // resourceTable
       resource_table_resourceName: "リソース名",
       resource_table_resourceUrlTitle: "リンク",
-      resource_table_resourceUrlDisplayName: "Click リンク",
+      resource_table_resourceUrlDisplayName: "クリック",
       resource_table_isProxy: "プロキシ",
       resource_table_resourceType: "リソースタイプ",
       resource_table_startDate: "開始日",

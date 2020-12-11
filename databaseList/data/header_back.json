@@ -2,7 +2,7 @@
   {
     "title": {
       "en": "Usage Report",
-      "local": "使用統計"
+      "local": "利用統計"
     },
     "link": "usageReport.html",
     "focus": false,
@@ -11,7 +11,7 @@
   {
     "title": {
       "en": "Settings",
-      "local": "系統設定"
+      "local": "設定"
     },
     "link": " ",
     "focus": false,
@@ -19,7 +19,7 @@
       {
         "title": {
           "en": "Resources",
-          "local": "資源管理"
+          "local": "リソース管理"
         },
         "link": "manageResource.html",
         "focus": false,
@@ -28,7 +28,7 @@
       {
         "title": {
           "en": "Facets",
-          "local": "後分類管理"
+          "local": "サブジェクト"
         },
         "link": "manageSubject.html",
         "focus": false,
@@ -37,7 +37,7 @@
       {
         "title": {
           "en": "Commonly Resource",
-          "local": "常用資源"
+          "local": "おすすめのリソース"
         },
         "link": "manageCommonlyDatabase.html",
         "focus": false,
@@ -46,7 +46,7 @@
       {
         "title": {
           "en": "News",
-          "local": "消息管理"
+          "local": "ニュース管理"
         },
         "link": "manageLatestNews.html",
         "focus": false,
@@ -55,7 +55,7 @@
       {
         "title": {
           "en": "Identity Settings",
-          "local": "身份管理"
+          "local": "アイデンティティ管理"
         },
         "link": "manageAuth.html",
         "focus": false,
