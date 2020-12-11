@@ -359,7 +359,7 @@ header nav .nav-list li.multi:before {
 }
 
 body {
-  background-image: url("../../img/frontstage_background.jpg");
+  /* background-image: url("../../img/frontstage_background.jpg"); */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
