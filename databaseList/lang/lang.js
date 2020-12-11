@@ -351,7 +351,7 @@ const messages = {
       // resourceTable
       resource_table_resourceName: "リソース名",
       resource_table_resourceUrlTitle: "リンク",
-      resource_table_resourceUrlDisplayName: "クリック",
+      resource_table_resourceUrlDisplayName: "クリックしてリソースを見る",
       resource_table_isProxy: "プロキシ",
       resource_table_resourceType: "リソースタイプ",
       resource_table_startDate: "開始日",
